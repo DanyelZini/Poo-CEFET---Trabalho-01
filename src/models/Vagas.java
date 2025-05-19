@@ -1,31 +1,23 @@
 package models;
 
-import enums.Tipo;
+import java.sql.Date;
 
 public class Vagas {
     private int id;
     private String placaCarro;
-    private Tipo tipo;
-    private int piso;
+    private Date dataEntrada;
     private boolean ocupado;
 
-    public Vagas(int id, String placaCarro, Tipo tipo, int piso, boolean ocupado) {
-        if (id <= 0) 
-            throw new IllegalArgumentException("O id deve ser maior que 0.");
-        if (placaCarro == null || placaCarro.isEmpty())
-            throw new NullPointerException("A placa do carro não pode ser nula ou vazia.");
-        if (piso < 0)
-            throw new IllegalArgumentException("O piso deve ser maior ou igual a 0.");
-        if (piso < 0)
-            throw new IllegalArgumentException("O piso deve ser maior ou igual a 0.");
+    
+    public Vagas(int id) {
+        if (id < 0) 
+            throw new IllegalArgumentException("Vagas: O id deve ser maior que 0.");
         if (ocupado == true)
-            throw new NullPointerException("O status de ocupado não pode ser true de inicio.");
+            throw new IllegalArgumentException("Vagas: O status de ocupado não pode ser true de inicio.");
 
         this.id = id;
-        this.placaCarro = placaCarro;
-        this.tipo = tipo;
-        this.piso = piso;
-        this.ocupado = ocupado;
+        this.placaCarro = null;
+        this.ocupado = false;
     }
 
     public int getId() {
@@ -34,28 +26,9 @@ public class Vagas {
 
     public void setId(int id) {
         if (id <= 0) {
-            throw new IllegalArgumentException("O id deve ser maior que 0.");
+            throw new IllegalArgumentException("Vagas-setId: O id deve ser maior que 0.");
         }
         this.id = id;
-    }
-
-    public Tipo getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(Tipo tipo) {
-        this.tipo = tipo;
-    }
-
-    public int getPiso() {
-        return piso;
-    }
-
-    public void setPiso(int piso) {
-        if (piso < 0) {
-            throw new IllegalArgumentException("O piso deve ser maior ou igual a 0.");
-        }
-        this.piso = piso;
     }
 
     public boolean isOcupado() {
@@ -70,10 +43,44 @@ public class Vagas {
         return placaCarro;
     }
 
+    public Date getDataEntrada() {
+        return dataEntrada;
+    }
+
+    public void setDataEntrada(Date dataEntrada) {
+        if (dataEntrada == null) {
+            throw new NullPointerException("Vagas-setDataEntrada: A data de entrada não pode ser nula.");
+        }
+        this.dataEntrada = dataEntrada;
+    }
+
     public void setPlacaCarro(String placaCarro) {
         if (placaCarro == null || placaCarro.isEmpty()) {
-            throw new NullPointerException("A placa do carro não pode ser nula ou vazia.");
+            throw new NullPointerException("Vagas-setPlacaCarro: A placa do carro não pode ser nula ou vazia.");
         }
         this.placaCarro = placaCarro;
     }
+
+    public void limparVaga() {
+        this.placaCarro = null;
+        this.ocupado = false;
+        this.dataEntrada = null;
+    }
+
+    public void ocuparVaga(String placaCarro) {
+        if (placaCarro == null || placaCarro.isEmpty()) {
+            throw new NullPointerException("Vagas-ocuparVaga: A placa do carro não pode ser nula ou vazia.");
+        }
+        this.placaCarro = placaCarro;
+        this.dataEntrada = new Date(System.currentTimeMillis());
+        this.ocupado = true;
+    }
+
+
+    @Override
+    public String toString() {
+        return "\t\t> [id=" + id + ", placaCarro=" + placaCarro + ", ocupado=" + ocupado + "]";
+    }
+
+    
 }
