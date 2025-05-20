@@ -1,18 +1,26 @@
-## Getting Started
+# Sistema de Gerenciamento de Estacionamento
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Este projeto é um sistema simples de gerenciamento de estacionamento, desenvolvido em Java, utilizando conceitos de Programação Orientada a Objetos (POO).
 
-## Folder Structure
+## Estrutura do Projeto
+- `src/Controller/`: Contém as classes responsáveis pelo controle do sistema e menus de interação.
+- `src/models/`: Contém as classes que representam os modelos do sistema, como Veículo, Estacionamento e Vagas.
+- `src/enums/`: Contém os tipos enumerados, como Tipo de veículo e Marca.
+- `src/BD/`: Simula um banco de dados em memória para veículos e estacionamento.
 
-The workspace contains two folders by default, where:
+## Funcionalidades
+- **Cadastro e busca de veículos**: Permite adicionar veículos ao sistema e pesquisar por placa.
+- **Gestão de vagas**: Permite cadastrar, excluir e listar vagas do estacionamento.
+- **Alteração de tarifas**: Permite modificar dinamicamente as tarifas de CARRO, MOTO e UNITARIO pelo menu de gestão.
+- **Menus interativos**: O sistema possui menus para atendimento e gestão, acessíveis via terminal.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Observações
+- O sistema utiliza enums para tipos de veículos e marcas, facilitando a manutençã.
+- As tarifas podem ser alteradas em tempo de execução pelo menu de gestão.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Exemplo de Uso
+- Pesquisar veículo por placa
+- Alterar tarifa de um tipo de veículo
+- Listar vagas do estacionamento
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+---

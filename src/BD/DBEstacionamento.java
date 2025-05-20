@@ -1,16 +1,18 @@
-package models;
+package BD;
 
 import java.sql.Date;
+import java.sql.Time;
 
 import enums.Tipo;
+import models.Vagas;
 
-public class Estacionamento {
+public class DBEstacionamento {
     private Vagas[] vagas;
     private int quantPorPiso;
     private int quantPisos;
     private boolean cheia;
 
-    public Estacionamento(int quantPorPiso, int quantPisos) {
+    public DBEstacionamento(int quantPorPiso, int quantPisos) {
         if (quantPisos <= 0)
             throw new IllegalArgumentException("Estacionamento: A quantidade de pisos deve ser maior que 0.");
         if (quantPorPiso <= 0)
@@ -103,10 +105,9 @@ public class Estacionamento {
                 + "\n]";
     }
 
-    public Double calcularTarifa(String tipo, Date datasaida) {
-        Tipo Tarifas = Tipo.valueOfIgnoreCase(tipo);
-        double tarifa = Tarifas.getTarifa();
-        long tempoEstacionado = datasaida.getTime() - System.currentTimeMillis();
+    public Double calcularTarifa(String tipo, Date datasaida, Time horasaida) {
+        double tarifa = Tipo.valueOfIgnoreCase(tipo).getTarifa();
+        long tempoEstacionado = datasaida.getTime() - vagas[0].getDataEntrada().getTime() + horasaida.getTime() - vagas[0].getDataEntrada().getTime();
         long horasEstacionado = tempoEstacionado / (1000 * 60 * 60);
         if (horasEstacionado <= 0) {
             throw new IllegalArgumentException("Estacionamento-calcularTarifa: O veiculo nao esta estacionado.");

@@ -1,6 +1,7 @@
 package Controller;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Scanner;
 
 import BD.BDVeiculos;
@@ -9,30 +10,30 @@ import models.Veiculo;
 
 public class Atendimento {
     Scanner scr = new Scanner(System.in);
-    BDVeiculos veiculos = new BDVeiculos();
+    public static BDVeiculos veiculos = new BDVeiculos();
 
     public void menu() {
         int opcao = 0;
 
         do {
-            this.limparTerminal();
+            Atendimento.limparTerminal();
             System.out.println("Menu:");
             System.out.println("1. Pesquisar carro");
             System.out.println("2. Adicionar veiculo");
             System.out.println("3. Entrada do veiculo");
             System.out.println("4. Saida do veiculo");
-            System.out.println("0. Sair");
+            System.out.println("0. Voltar");
             System.out.print("Escolha uma opcao: \n> ");
             opcao = scr.nextInt();
 
             switch (opcao) {
                 case 1:
-                    this.limparTerminal();
+                    Atendimento.limparTerminal();
                     System.out.print("\nDigite a placa do carro para pesquisar: \n> ");
                     String placa = scr.next();
                     System.out.println("\tPesquisando carro da placa: " + placa);
                     try {
-                        System.out.println(veiculos.buscarVeiculo(this.verificarPlaca(placa)).toString());
+                        System.out.println(veiculos.buscarVeiculo(Atendimento.verificarPlaca(placa)).toString());
                         System.out.println("Digite qualquer tecla para continuar...");
                         scr.next();
                     } catch (Exception e) {
@@ -42,11 +43,11 @@ public class Atendimento {
                     }
                     break;
                 case 2:
-                    this.limparTerminal();
+                    Atendimento.limparTerminal();
                     System.out.print("\nDigite a placa do carro para adicionar: \n> ");
                     String placaAdicionar = scr.next();
                     try {
-                        placaAdicionar = this.verificarPlaca(placaAdicionar);
+                        placaAdicionar = Atendimento.verificarPlaca(placaAdicionar);
                         System.out.print("Digite o modelo do carro: \n> ");
                         String modelo = scr.next();
                         System.out.print("Digite a cor do carro: \n> ");
@@ -84,10 +85,11 @@ public class Atendimento {
                     String placaSaida = scr.next();
                     System.out.println("\tSaida do veiculo de placa: " + placaSaida);
                     try {
-                        Veiculo veiculo = veiculos.buscarVeiculo(this.verificarPlaca(placaSaida));
+                        Veiculo veiculo = veiculos.buscarVeiculo(Atendimento.verificarPlaca(placaSaida));
                         Date dataEntrada = Gestao.estacionamento.limparVaga(placaSaida);
+                        Time horaEntrada = new Time(System.currentTimeMillis());
                         System.out.println("Data de saida: " + dataEntrada.getTime());
-                        System.out.println("Valor a pagar: " + Gestao.estacionamento.calcularTarifa(veiculo.getTipo(), dataEntrada));
+                        System.out.println("Valor a pagar: " + Gestao.estacionamento.calcularTarifa(veiculo.getTipo(), dataEntrada, horaEntrada));
                         System.out.println("Digite qualquer tecla para continuar...");
                         scr.next();
                     } catch (Exception e) {
@@ -105,7 +107,7 @@ public class Atendimento {
         } while (opcao != 0);
     }
 
-    public void limparTerminal() {
+    public static void limparTerminal() {
         try {
             if (System.getProperty("os.name").contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -115,7 +117,7 @@ public class Atendimento {
         }
     }
 
-    private String verificarPlaca(String placa) {
+    public static String verificarPlaca(String placa) {
         if (placa == null) {
             throw new NullPointerException("Todos os campos devem ser preenchidos.");
         }

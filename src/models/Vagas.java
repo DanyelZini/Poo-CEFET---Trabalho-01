@@ -1,11 +1,13 @@
 package models;
 
 import java.sql.Date;
+import java.sql.Time;
 
 public class Vagas {
     private int id;
     private String placaCarro;
     private Date dataEntrada;
+    private Time horaEntrada;
     private boolean ocupado;
 
     
@@ -73,13 +75,14 @@ public class Vagas {
         }
         this.placaCarro = placaCarro;
         this.dataEntrada = new Date(System.currentTimeMillis());
+        this.horaEntrada = new Time(System.currentTimeMillis());
         this.ocupado = true;
     }
 
 
     @Override
     public String toString() {
-        return "\t\t> [id=" + id + ", placaCarro=" + placaCarro + ", ocupado=" + ocupado + "]";
+        return "\t\t> [id=" + id + ", placaCarro=" + placaCarro + ", ocupado=" + ocupado +  ", dataEntrada=" + dataEntrada + ", horaEntrada=" + horaEntrada + "]";
     }
 
     

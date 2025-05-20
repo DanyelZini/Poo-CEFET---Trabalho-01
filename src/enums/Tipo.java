@@ -11,6 +11,16 @@ public enum Tipo {
         this.tarifa = tarifa;
     }
 
+    // public void modificarTarifa(Tipo tipo, double novaTarifa) {
+    //     if (tipo == null) {
+    //         throw new NullPointerException("Tipo-modificarTarifa: O tipo nao pode ser nulo.");
+    //     }
+    //     if (novaTarifa <= 0) {
+    //         throw new IllegalArgumentException("Tipo-modificarTarifa: A tarifa deve ser maior que 0.");
+    //     }
+    //     tipo.tarifa = novaTarifa;
+    // }
+
     public double getTarifa() {
         return tarifa;
     }
@@ -19,12 +29,17 @@ public enum Tipo {
         this.tarifa = novaTarifa;
     }
 
-    public static Tipo valueOfIgnoreCase(String name) {
+    public static void modificarTarifaPorNome(String nomeTipo, double novaTarifa) {
+        Tipo tipo = valueOfIgnoreCase(nomeTipo);
+        tipo.setTarifa(novaTarifa);
+    }
+
+    public static Tipo valueOfIgnoreCase(String nome) {
         for (Tipo tipo : values()) {
-            if (tipo.name().equalsIgnoreCase(name)) {
+            if (tipo.name().equalsIgnoreCase(nome)) {
                 return tipo;
             }
         }
-        throw new IllegalArgumentException("Nao ah " + name);
+        throw new IllegalArgumentException("Nao ah " + nome);
     }
 }
